@@ -8,7 +8,7 @@ using namespace workers;
 
 void print(std::string x);
 EmployeePtr creator();
-Name name_f();
+std::string name_f();
 int main() {
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
@@ -19,8 +19,8 @@ int main() {
 		print("1 - Вставить элемент");
 		print("2 - Удалить элемент");
 		print("3 - Вывести список");
-		print("4 - Найти кол-во оплачиваемых часов для заданной дисциплины");
-		print("5 - Определение названия первой дисциплины с максимальным количеством оплачиваемых часов");
+		print("4 - ");
+		print("5 - ");
 		print("6 - Выход");
 		int c;
 		cin >> c;
@@ -60,12 +60,6 @@ int main() {
 				cout << _Worker[i];
 			}
 			break;
-		case 4:
-			cout << search_max_by_name(_Worker, name_f()) << endl;
-			break;
-		case 5:
-			print(search_max_hours(_Worker));
-			break;
 		case 6:
 			return 0;
 			break;
@@ -76,73 +70,52 @@ int main() {
 void print(std::string x) {
 	cout << x << endl;
 }
-Name name_f() {
-	print("1 - ООП");
-	print("2 - МатАн");
-	print("3 - АлГем");
-	print("4 - История");
-	print("5 - Физра");
-	int c;
-	cin >> c;
-	switch (c)
-	{
-		case 1:
-			return Name::ООП;
-			break;
-
-		case 2:
-			return Name::МатАн;
-			break;
-
-		case 3:
-			return Name::АлГем;
-			break;
-		case 4:
-			return Name::История;
-			break;
-
-		case 5:
-			return Name::Физра;
-			break;
-	}
-}
-int hours_f() {
-	print("Введите количество часов");
-	int c;
+std::string name_f() {
+	print("Введите имя: ");
+	std::string c;
 	cin >> c;
 	return c;
 }
-int count_f() {
-	print("Введите количество групп");
-	int c;
+float balance_f() {
+	print("Введите баланс: ");
+	float c;
+	cin >> c;
+	return c;
+}
+float percent_f() {
+	print("Введите процент: ");
+	float c;
 	cin >> c;
 	return c;
 }
 Type type_f() {
-	print("1 - Лекция");
-	print("2 - Практика");
-	print("3 - Лабораторная работа");
+	print("1 - Расчетный");
+	print("2 - Вкладовый");
+	print("3 - Кредитный");
 	int c;
 	cin >> c;
 	switch (c)
 	{
 	case 1:
-		return Type::Lecture;
+		return Type::Расчетный;
 		break;
 
 	case 2:
-		return Type::Practic;
+		return Type::Вкладовый;
 		break;
 
 	case 3:
-		return Type::Laboratory;
+		return Type::Кредитный;
 		break;
 	}
 }
 EmployeePtr creator() {
+	float percent = 0;
 	Type type = type_f();
-	Name name = name_f();
-	int hours = hours_f();
-	int count = count_f();
-	return Employee::create(type, name, hours, count);
+	std::string name = name_f();
+	int balance = balance_f();
+	if (type != Type::Расчетный){
+		percent = percent_f();
+	}
+	return Employee::create(type, name, balance, percent);
 }

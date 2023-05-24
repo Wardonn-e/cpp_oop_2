@@ -5,16 +5,9 @@
 
 namespace workers {
 	enum class Type {
-		Lecture = 0,
-		Practic = 1,
-		Laboratory = 2
-	};
-	enum class Name {
-		ООП = 0,
-		МатАн = 1,
-		АлГем = 2,
-		История = 3,
-		Физра = 4
+		Расчетный,
+		Вкладовый,
+		Кредитный
 	};
 
 	class Employee;
@@ -23,26 +16,26 @@ namespace workers {
 	class Employee {
 	private:
 		Type _type;
-		Name _name;
-		int _count_hours;
-		int _count_groups;
-		Employee(Type type, Name name, int count_hours, int count_groups);
+		std::string _name;
+		float _balance;
+		float _percent;
+		Employee(Type type, std::string name, int balance, float percent);
 	public:
-		static EmployeePtr create(Type type, Name name, int count_hours, int count_groups);
+		static EmployeePtr create(Type type, std::string name, int balance, float percent);
 
 		void set_type(Type type);
 		Type get_type() const;
 
-		void set_name(Name name);
-		Name get_name() const;
+		void set_name(std::string name);
+		std::string get_name() const;
 
-		void set_count_groups(int count);
-		int get_count_groups() const;
+		int get_balance() const;
+		void set_balance(int balance);
 
-		void set_count_hours(int count);
-		int get_count_hours() const;
-		
-		int calcul() const;
+		float get_percent() const;
+		void set_percent(float percent);
+
+		float calcul() const;
 	};
 
 	class Employees {
@@ -64,7 +57,4 @@ namespace workers {
 	};
 
 	std::ostream& operator<< (std::ostream& out, const EmployeePtr& other);
-
-	int search_max_by_name(const Employees& _Worker, Name name);
-	std::string search_max_hours(const Employees& _Worker);
 }

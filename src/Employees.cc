@@ -91,7 +91,7 @@ Employees::~Employees() {
 	cout << "СПИСОК УДАЛЕН";
 }
 
-
+/*
 std::string workers::search_max_hours(const Employees& _Worker) {
 	int max = -1;
 	int max_index = -1;
@@ -120,13 +120,12 @@ int workers::search_max_by_name(const Employees& _Worker, Name name) {
 	}
 	return value;
 }
-
+*/
 
 ostream& workers::operator<< (std::ostream& out, const EmployeePtr& other) {
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
-	std::string name[] = { "ООП", "МатАн", "АлГем", "История", "Физра"};
-	std::string type[] = { "Лекция", "Практика", "Лабораторная работа"};
-	out << type[static_cast<int>(other->get_type())] << "\t" << name[static_cast<int>(other->get_name())] << "\n" << "Групп - " << other->get_count_groups() << " | Часов - " << other->get_count_hours() << " | Оплачиваемых часов - " << other->calcul() << endl << endl;
+	std::string type[] = { "Расчетный", "Вкладовый", "Кредитный"};
+	out << type[static_cast<int>(other->get_type())] << " счет " << other->get_name() << "\n" << "Баланс: " << other->get_balance() << " | Процентная ставка - " << other->get_percent() << "\n" << "Баланс в следующем месяце: " << other->calcul() << endl << endl;
 	return out;
 }

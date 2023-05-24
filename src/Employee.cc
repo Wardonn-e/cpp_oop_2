@@ -1,19 +1,17 @@
 #include <class/workers.h>
-
 #include <cassert>
 #include <stdexcept>
-#include <ctime>
 #include <iostream>
 
 using namespace std;
 using namespace workers;
 
 
-EmployeePtr Employee::create(Type type, Name name, int count_hours, int count_groups){
-	return new Employee(type, name, count_hours, count_groups);
+EmployeePtr Employee::create(Type type, std::string _name, int balance, float percent) {
+	return new Employee(type, _name, balance, percent);
 }
 
-Employee::Employee(Type type, Name name, int count_hours, int count_groups) : _type(type), _name(name), _count_hours(count_hours), _count_groups(count_groups) {}
+Employee::Employee(Type type, std::string name, int balance, float percent) : _type(type), _name(name), _balance(balance), _percent(percent) {}
 
 Type Employee::get_type() const {
 	return _type;
@@ -23,42 +21,45 @@ void Employee::set_type(Type type) {
 	_type = type;
 }
 
-Name Employee::get_name() const {
+std::string Employee::get_name() const {
 	return _name;
 }
 
-void Employee::set_name(Name worker_name) {
+void Employee::set_name(std::string worker_name) {
 	_name = worker_name;
 }
 
-int Employee::get_count_hours() const {
-	return _count_hours;
+int Employee::get_balance() const {
+	return _balance;
 }
 
-void Employee::set_count_hours(int count) {
-	_count_hours = count;
+void Employee::set_balance(int balance)  {
+	_balance = balance;
+}
+void Employee::set_percent(float percent) {
+	_percent = percent;
+}
+float Employee::get_percent() const {
+	return _percent;
 }
 
-int Employee::get_count_groups() const {
-	return _count_groups;
-}
 
-void Employee::set_count_groups(int count) {
-	_count_groups = count;
-}
-
-
-int Employee::calcul() const {
+float Employee::calcul() const {
 	switch (_type)
 	{
-		case(Type::Lecture):
-			return _count_hours;
+		case(Type::Расчетный):
+			return _balance;
 			break;
-		case(Type::Practic):
-			return _count_hours * _count_groups;
+		case(Type::Вкладовый):
+			return _balance + (_balance * _percent / 12 / 100);
 			break;
-		case(Type::Laboratory):
-			return _count_hours * _count_groups * 2;
+		case(Type::Кредитный):
+			if (_balance < 0) {
+				return	_balance + (_balance * _percent / 12 / 100);
+			}
+			else {
+				return	_balance;
+			}
 			break;
 		default:
 			throw runtime_error("[Function::compute_derivative] Invalid function type.");
